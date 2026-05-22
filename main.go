@@ -18,18 +18,27 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	typed, _ := reader.ReadString('\n')
 	end := time.Now()
-
+	typed = strings.TrimSuffix(typed, "\n")
 	duration := end.Sub(start)
 
-	words := strings.Fields(sample)
-	wordCount := len(words)
+	sampleWords := strings.Fields(sample)
+	wordCount := len(sampleWords)
 
 	minutes := duration.Minutes()
 
 	wpm := float64(wordCount) / minutes
+
+	typedWords := strings.Fields(typed)
+	correct := 0
+	for i := 0; i < len(typedWords) && i < len(sampleWords); i++ {
+		if typedWords[i] == sampleWords[i] {
+		}
+		correct++
+	}
+	accuracy := (float64(correct) / float64(wordCount)) * 100
+
 	fmt.Printf("Time taken : %v \n", duration.Seconds())
 	fmt.Println("You typed : ", typed)
-
 	fmt.Printf("Gross WPM : %.2f \n", wpm)
-
+	fmt.Printf("Accuracy : %.2f \n", accuracy)
 }
